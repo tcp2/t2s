@@ -43,6 +43,6 @@ jobs:
 
       - name: upload
         run: |
-          rclone copy ${{ github.run_id }}.mp3 s3:upload
+          rclone copy ${{ github.run_id }}.mp3 s3:1d
       
  
