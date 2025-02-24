@@ -29,9 +29,10 @@ jobs:
         run: |
           echo "${{ github.event.inputs.text }}" > input.txt
           python3 clean.py
+          cat clean.txt
 
       - name: Convert Text to Speech
-        run: ./tts --text "$(cat clean_text.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media speech.mp3
+        run: ./tts --text "$(cat clean.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media speech.mp3
 
       - name: Upload to API
         run: |
