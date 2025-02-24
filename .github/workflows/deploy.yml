@@ -34,7 +34,7 @@ jobs:
 
       - name: Convert Text to Speech
         run: |
-          ./tts --text "$(cat clean.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media ${{ github.run_id }}.mp3
+          ./tts --text "$(cat clean.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media ${{ github.run_id }}-${{ github.run_number }}.mp3
 
       - name: Setup Rclone
         uses: AnimMouse/setup-rclone@v1
@@ -43,7 +43,7 @@ jobs:
 
       - name: upload
         run: |
-          rclone copy ${{ github.run_id }}.mp3 s3:1d
-          echo "https://ab718d52eeacf64e23f9be94f7b4a1b4.r2.cloudflarestorage.com/1d/${{ github.run_id }}.mp3"
+          rclone copy ${{ github.run_id }}-${{ github.run_number }}.mp3 s3:1d
+          echo "https://ab718d52eeacf64e23f9be94f7b4a1b4.r2.cloudflarestorage.com/1d/${{ github.run_id }}-${{ github.run_number }}.mp3"
       
  
