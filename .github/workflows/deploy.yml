@@ -8,7 +8,7 @@ on:
         required: true
 
 jobs:
-  tts_job:
+  job:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -27,4 +27,5 @@ jobs:
         run: |
           curl -X POST "https://minhvh-n8.hf.space/webhook/upload" \
           -H "Authorization: Bearer ${{secrets.AUTH}}" \
-          -F "file=@speech.mp3"
+          -H "Content-Type: multipart/form-data" \
+          -F "file=@speech.mp3;type=audio/mpeg3"
