@@ -31,6 +31,7 @@ jobs:
           python3 clean.py
           cat clean.txt
 
+
       - name: Convert Text to Speech
         run: ./tts --text "$(cat clean.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media speech.mp3
 
@@ -40,6 +41,7 @@ jobs:
           rclone_config: ${{ secrets.S3 }}
 
       - name: upload
-        run: rclone copy speech.mp3 s3:speech.mp3
+        run: |
+          rclone copy speech.mp3 s3:$(date +%s | md5sum | cut -c1-7).mp3
       
  
