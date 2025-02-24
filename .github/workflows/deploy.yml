@@ -34,8 +34,7 @@ jobs:
 
       - name: Convert Text to Speech
         run: |
-          echo "filename=$(date +%s | md5sum | cut -c1-7).mp3" >> $GITHUB_ENV
-          ./tts --text "$(cat clean.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media ${{ env.filename }}
+          ./tts --text "$(cat clean.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media ${{ github.run_id }}.mp3
 
       - name: Setup Rclone
         uses: AnimMouse/setup-rclone@v1
@@ -44,6 +43,6 @@ jobs:
 
       - name: upload
         run: |
-          rclone copy ${{ env.filename }} s3:
+          rclone copy ${{ github.run_id }}.mp3 s3:
       
  
