@@ -20,8 +20,17 @@ jobs:
           tar -xzvf tts.tar.gz
           chmod +x tts
 
+      - name: Clean Text
+        run: |
+          TEXT="${{ github.event.inputs.text }}"
+          TEXT="${TEXT//$'\n'/ }"     # Thay \n bằng khoảng trắng
+          TEXT="${TEXT//$'\r'/ }"     # Thay \r bằng khoảng trắng
+          TEXT="${TEXT//\"/\\\"}"     # Escape dấu nháy "
+          TEXT="${TEXT//\'/\\\'}"     # Escape dấu nháy '
+          echo "$TEXT" > clean_text.txt
+
       - name: Convert Text to Speech
-        run: ./tts --text "${{ github.event.inputs.text }}" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media speech.mp3
+        run: ./tts --text "$(cat clean_text.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media speech.mp3
 
       - name: Upload to API
         run: |
