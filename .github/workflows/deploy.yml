@@ -34,8 +34,12 @@ jobs:
       - name: Convert Text to Speech
         run: ./tts --text "$(cat clean.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media speech.mp3
 
-      - name: Upload to API
-        run: |
-          curl -X POST "https://minhvh-n8.hf.space/webhook/upload" \
-          -H "Authorization: Bearer ${{secrets.AUTH}}" \
-          -F "file=@speech.mp3;type=audio/mpeg"
+      - name: Setup Rclone
+        uses: AnimMouse/setup-rclone@v1
+        with:
+          rclone_config: ${{ secrets.S3 }}
+
+      - name: upload
+        run: rclone copy speech.mp3 s3:speech.mp3
+      
+ 
