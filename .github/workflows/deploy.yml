@@ -27,5 +27,4 @@ jobs:
         run: |
           curl -X POST "https://minhvh-n8.hf.space/webhook/upload" \
           -H "Authorization: Bearer ${{secrets.AUTH}}" \
-          -H "Content-Type: multipart/form-data" \
           -F "file=@speech.mp3;type=audio/mpeg"
