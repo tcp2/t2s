@@ -42,6 +42,6 @@ jobs:
 
       - name: upload
         run: |
-          rclone copy speech.mp3 s3:$(date +%s | md5sum | cut -c1-7).mp3
+          rclone copyto speech.mp3 s3:$(date +%s | md5sum | cut -c1-7).mp3
       
  
