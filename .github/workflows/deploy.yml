@@ -44,6 +44,6 @@ jobs:
       - name: upload
         run: |
           rclone copy ${{ github.run_id }}.mp3 s3:1d
-          cat https://ab718d52eeacf64e23f9be94f7b4a1b4.r2.cloudflarestorage.com/1d/${{ github.run_id }}.mp3
+          echo "https://ab718d52eeacf64e23f9be94f7b4a1b4.r2.cloudflarestorage.com/1d/${{ github.run_id }}.mp3"
       
  
