@@ -26,5 +26,5 @@ jobs:
       - name: Upload to API
         run: |
           curl -X POST "https://minhvh-n8.hf.space/webhook/upload" \
+          -H "Authorization: Bearer " \
           -F "file=@speech.mp3"
-          
