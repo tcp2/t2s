@@ -24,7 +24,7 @@ on:
         default: "0%"
 
 jobs:
-  job:
+  run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
