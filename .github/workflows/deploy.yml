@@ -46,4 +46,4 @@ jobs:
            -p ${{ inputs.pitch }} \
            -r ${{ inputs.rate }} \
            -vol ${{ inputs.volume }} \
-           -ho ${{ inputs.hook }} \
+           -ho ${{ inputs.hook }} 
