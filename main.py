@@ -28,7 +28,6 @@ class Config:
     rate: str = "+0%"
     volume: str = "+0%"
     pitch: str = "+0Hz"
-    hook: str = ""
 
 
 class TextToSpeech:
@@ -116,9 +115,6 @@ class TextToSpeech:
 
         logger.info(f"Audio URL: https://cdn.laobo.xyz/audios/{self.config.name}")
 
-        if self.config.hook:
-            requests.get(self.config.hook, timeout=5)
-            logger.info(f"Webhook sent to {self.config.hook}")
 
 
 def parse_args() -> Config:
@@ -128,7 +124,6 @@ def parse_args() -> Config:
     p.add_argument("-r", "--rate", default="+0%")
     p.add_argument("-vol", "--volume", default="+0%")
     p.add_argument("-p", "--pitch", default="+0Hz")
-    p.add_argument("-ho", "--hook", default="")
     return Config(**vars(p.parse_args()))
 
 
