@@ -6,7 +6,6 @@ import os
 import shutil
 import subprocess
 import edge_tts as tts
-import pandas as pd
 import re
 import requests
 import uuid
@@ -138,14 +137,6 @@ async def amain(args) -> None:
     shutil.rmtree(tmp_dir)
 
     logger.info(f"Audio URL: https://cdn.laobo.xyz/audios/{args.name}")
-
-
-def exportVoices():
-    voices = asyncio.run(tts.list_voices())
-    df = pd.DataFrame(voices)
-    df = df[["ShortName"]]
-    df = df.rename(columns={"ShortName": "name"})
-    df.to_csv("voices.csv", index=False)
 
 
 def uploadAudio(name: str) -> None:
