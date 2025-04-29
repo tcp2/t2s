@@ -1,5 +1,9 @@
 name: Create Voice
 
+permissions:
+  contents: read
+  
+
 on:
   workflow_dispatch:
     inputs:
@@ -27,27 +31,13 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
-
-      - name: Cache pip dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/pip
-          key: pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            pip-
-
-      - name: Install dependencies
-        run: |
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-      - name: Process text with main.py
+          python-version: "pypy3.10"
+          cache: "pip"
+      - run: pip install -r requirements.txt
+      - name: Process
         run: |
           echo "${{ github.event.inputs.text }}" > input.txt
           python main.py ${{ inputs.name}} -v ${{ inputs.voice }} -p ${{ inputs.pitch }} -r ${{ inputs.rate }} -vol ${{ inputs.volume }}
