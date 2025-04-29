@@ -81,8 +81,8 @@ class TextToSpeech:
 
     def upload(self) -> None:
         logger.info(f"Uploading {self.OUTPUT_FILE}...")
-        r = requests.get(
-            "https://laobo.xyz/api/preup", params={"name": self.config.name}, timeout=5
+        r = requests.post(
+            "https://laobo.xyz/api/preup", data={"name": self.config.name}, timeout=5
         )
         r.raise_for_status()
         url = r.json()["url"]
