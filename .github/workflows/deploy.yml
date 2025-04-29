@@ -15,13 +15,13 @@ on:
 
       pitch:
         description: "pitch"
-        default: "0"
+        default: "0Hz"
       rate:
         description: "rate"
-        default: "0"
+        default: "0%"
       volume:
         description: "volume"
-        default: "0"
+        default: "0%"
 
 jobs:
   job:
