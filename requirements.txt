@@ -1,2 +1,2 @@
-requests
-edge-tts
+requests==2.32.3
+edge-tts==7.0.1
