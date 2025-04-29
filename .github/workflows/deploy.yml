@@ -1,4 +1,4 @@
-name: t2p
+name: create voice
 
 on:
   workflow_dispatch:
