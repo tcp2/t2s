@@ -26,7 +26,7 @@ on:
         default: "+0%"
       hook:
         description: "hook"
-        default: "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXX
+        default: ""
 
 jobs:
   run:
@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.13' 
+          python-version: "3.13"
           cache: "pip"
       - run: pip install -r requirements.txt
       - name: Process
@@ -46,4 +46,4 @@ jobs:
            -p ${{ inputs.pitch }} \
            -r ${{ inputs.rate }} \
            -vol ${{ inputs.volume }} \
-           -ho ${{ inputs.hook }} 
+           -ho ${{ inputs.hook }}
