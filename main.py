@@ -36,15 +36,10 @@ class TextToSpeech:
     TMP_DIR: str = "tmp"
     OUTPUT_FILE: str = os.path.join(OUTPUT_DIR, "audio.mp3")
 
-    def __init__(self, config: Config) -> None:
-        self.config = config
+    def __init__(self) -> None:
+        self.config = parse_args()
         self.semaphore = asyncio.Semaphore(15)
         os.makedirs(self.OUTPUT_DIR, exist_ok=True)
-
-    def clean_text(self, text: str) -> str:
-        return re.sub(
-            r"\s+", " ", re.sub(r"[^\w\s.,!?]", "", text.replace("\\n", ""))
-        ).strip()
 
     def split_text(
         self, text: str, chunk_size: int = 1, min_words: int = 10
@@ -99,7 +94,7 @@ class TextToSpeech:
         start: float = time.time()
         with open("input.txt", "r", encoding="utf-8") as f:
             raw_text: str = f.read()
-        cleaned: str = self.clean_text(raw_text)
+        cleaned: str = clean_text(raw_text)
 
         logger.info(f"Character count: {len(cleaned)}")
         chunks: List[str] = self.split_text(cleaned)
@@ -136,7 +131,12 @@ def parse_args() -> Config:
     return Config(**vars(p.parse_args()))
 
 
+def clean_text(text: str) -> str:
+    return re.sub(
+        r"\s+", " ", re.sub(r"[^\w\s.,!?]", "", text.replace("\\n", ""))
+    ).strip()
+
+
 if __name__ == "__main__":
-    config: Config = parse_args()
-    tts = TextToSpeech(config)
+    tts = TextToSpeech()
     asyncio.run(tts.run())
