@@ -2,7 +2,7 @@ name: Create Voice
 
 permissions:
   contents: read
-  
+
 
 on:
   workflow_dispatch:
@@ -39,5 +39,5 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Process
         run: |
-          echo "${{ github.event.inputs.text }}" > input.txt
+          printf "%s" "${{ inputs.text }}" > input.txt
           python main.py ${{ inputs.name}} -v ${{ inputs.voice }} -p ${{ inputs.pitch }} -r ${{ inputs.rate }} -vol ${{ inputs.volume }}
