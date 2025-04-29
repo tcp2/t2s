@@ -118,6 +118,7 @@ class TextToSpeech:
 
         if self.config.hook:
             requests.get(self.config.hook, timeout=5)
+            logger.info(f"Webhook sent to {self.config.hook}")
 
 
 def parse_args() -> Config:
