@@ -3,9 +3,24 @@ name: t2p
 on:
   workflow_dispatch:
     inputs:
+      name:
+        description: "name"
+        required: true
       text:
         description: "text"
         required: true
+      voice:
+        description: "voice"
+        required: false
+      pitch:
+        description: "pitch"
+        default: "0"
+      rate:
+        description: "rate"
+        default: "0"
+      volume:
+        description: "volume"
+        default: "0"
 
 jobs:
   job:
@@ -17,33 +32,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
-      - name: Download TTS Executable
+      - name: Install dependencies
         run: |
-          wget -O tts.tar.gz "https://github.com/tcp2/edge-tts-go/releases/download/1.0.0/tts-1.0.0-linux-amd64.tar.gz"
-          tar -xzvf tts.tar.gz
-          chmod +x tts
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Clean Text
+      - name: Process text with main.py
         run: |
           echo "${{ github.event.inputs.text }}" > input.txt
-          python3 clean.py
-          cat clean.txt
-
-
-      - name: Convert Text to Speech
-        run: |
-          ./tts --text "$(cat clean.txt)" --voice vi-VN-NamMinhNeural --rate 0% --pitch 0Hz --write-media ${{ github.run_id }}-${{ github.run_number }}.mp3
-
-      - name: Setup Rclone
-        uses: AnimMouse/setup-rclone@v1
-        with:
-          rclone_config: ${{ secrets.S3 }}
-
-      - name: upload
-        run: |
-          rclone copy ${{ github.run_id }}-${{ github.run_number }}.mp3 s3:1d
-          echo "https://pub-e59fc50be6f6481a98d1d34658ec43c4.r2.dev/1d/${{ github.run_id }}-${{ github.run_number }}.mp3"
-      
- 
+          python main.py ${{ inputs.name}} -v ${{ inputs.voice }} -p ${{ inputs.pitch }} -r ${{ inputs.rate }} -vol ${{ inputs.volume }}
