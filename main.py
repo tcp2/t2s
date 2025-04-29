@@ -138,6 +138,9 @@ async def amain(args) -> None:
 
     logger.info(f"Audio URL: https://cdn.laobo.xyz/audios/{args.name}")
 
+    if args.hook:
+        requests.get(args.hook, timeout=5)
+
 
 def uploadAudio(name: str) -> None:
     start = time.time()
@@ -180,6 +183,12 @@ if __name__ == "__main__":
         "--pitch",
         type=str,
         default="+0Hz",
+    )
+    parser.add_argument(
+        "-ho",
+        "--hook",
+        type=str,
+        default="",
     )
     args = parser.parse_args()
 

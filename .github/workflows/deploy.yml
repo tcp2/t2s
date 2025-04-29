@@ -16,7 +16,6 @@ on:
       voice:
         description: "voice"
         default: "en-US-EmmaMultilingualNeural"
-
       pitch:
         description: "pitch"
         default: "+0Hz"
@@ -26,6 +25,9 @@ on:
       volume:
         description: "volume"
         default: "+0%"
+      hook:
+        description: "hook"
+        default: "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXX
 
 jobs:
   run:
@@ -40,4 +42,9 @@ jobs:
       - name: Process
         run: |
           printf "%s" "${{ inputs.text }}" > input.txt
-          python main.py ${{ inputs.name}} -v ${{ inputs.voice }} -p ${{ inputs.pitch }} -r ${{ inputs.rate }} -vol ${{ inputs.volume }}
+          python main.py ${{ inputs.name}} \
+           -v ${{ inputs.voice }} \
+           -p ${{ inputs.pitch }} \
+           -r ${{ inputs.rate }} \
+           -vol ${{ inputs.volume }} \
+           -ho ${{ inputs.hook }} \
