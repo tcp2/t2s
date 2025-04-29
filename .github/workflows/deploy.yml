@@ -3,7 +3,6 @@ name: Create Voice
 permissions:
   contents: read
 
-
 on:
   workflow_dispatch:
     inputs:
